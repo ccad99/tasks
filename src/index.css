@@ -1,0 +1,86 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+   margin: 0;
+   padding: 0;
+}
+
+/* 3. Set base font */
+html {
+   font-size: 16px;
+}
+
+body {
+   /* 4. Add accessible line-height */
+   line-height: 1.5;
+   /* 5. Improve text rendering */
+   -webkit-font-smoothing: antialiased;
+   /* 6. set for full viewport */
+   min-height: 100vh;
+}
+
+/* 7. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+   display: block;
+   max-width: 100%;
+}
+
+/* 8. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+   font: inherit;
+}
+
+/* 9. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+   overflow-wrap: break-word;
+}
+
+/* 10. Improve line wrapping */
+p {
+   text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+   text-wrap: balance;
+   word-break: normal; /* Ensures balanced text but prevents forced breaks */
+}
+
+/* 11. Improve button focus */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+   outline: 2px solid #007bff;
+   outline-offset: 2px;
+}
+
+/*
+   12. Create a root stacking context
+ */
+#root,
+#__next {
+   isolation: isolate;
+}
