@@ -1,0 +1,96 @@
+.background {
+   background-color: lightblue;
+}
+
+.pageContainer {
+   position: relative;
+   margin: 0 10px;
+}
+
+.header {
+   position: relative;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   /* background: #f8f9fa; */
+   background: #f1f1f1;
+   padding: 15px 30px;
+   border-radius: 4px;
+}
+
+/* .headerTop {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.headerBottom {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 10px;
+} */
+
+.contentContainer {
+   display: flex;
+   gap: 10px;
+   margin-top: 10px;
+}
+
+.leftColumn {
+   width: 60%;
+   background: white;
+   /* background: #f1f1f1; */
+   padding: 10px;
+   border-radius: 4px;
+   /* margin-left: 5px; */
+   margin-bottom: 5px;
+}
+
+.rightColumn {
+   width: 40%;
+   background: white;
+   /* background: #f1f1f1; */
+   padding: 10px;
+   border-radius: 4px;
+   /* margin-right: 5px; */
+   margin-bottom: 5px;
+}
+
+/* .gridContainer {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 10px;
+} */
+
+/* .column {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+} */
+
+p {
+   /* background: #fff; */
+   background: #f1f1f1;
+   padding: 5px;
+   border-radius: 4px;
+   /* border: 1px solid #ddd; */
+   border: 1px solid #979696;
+}
+
+.actions button {
+   margin-left: 10px;
+   padding: 8px 12px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+.editButton {
+   background: #007bff;
+   color: white;
+}
+
+.deleteButton {
+   background: #dc3545;
+   color: white;
+}

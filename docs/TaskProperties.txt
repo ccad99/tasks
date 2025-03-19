@@ -1,0 +1,18 @@
+Saleforce Field API properties for Task Object
+==============================
+BusinessOwnerId, BusinessStatus, ComplianceGroup, ControllingFieldDefinitionId, DataType, Description, DeveloperName, DurableId, EntityDefinitionId, ExtraTypeInfo, Id, IsAiPredictionField, IsApiFilterable, IsApiGroupable, IsApiSortable, IsCalculated, IsCompactLayoutable, IsCompound, IsEverApiAccessible, IsFieldHistoryTracked, IsFlsEnabled, IsHighScaleNumber, IsHtmlFormatted, IsIndexed, IsListFilterable, IsListSortable, IsListVisible, 
+IsNameField, IsNillable, IsPolymorphicForeignKey, IsSearchPrefilterable, IsWorkflowFilterable, Label, LastModifiedById, LastModifiedDate, Length, MasterLabel, Metadata, NamespacePrefix, Precision, PublisherId, QualifiedApiName, ReferenceTargetField, ReferenceTo, RelationshipName, RunningUserFieldAccessId, Scale, SecurityClassification, ServiceDataTypeId, ValueTypeId
+
+
+Refined property list for Task - some values were not accepted in SF Inspector and other fields were null so they were removed
+=====================================================================
+DataType, DeveloperName, DurableId, EntityDefinitionId, ExtraTypeInfo, Id, IsAiPredictionField, IsApiFilterable, IsApiGroupable, IsApiSortable, IsCalculated, IsCompactLayoutable, IsCompound, IsFieldHistoryTracked, IsHighScaleNumber, IsHtmlFormatted, IsIndexed, IsListFilterable, IsListSortable, IsListVisible, 
+IsNameField, IsNillable, IsPolymorphicForeignKey, IsSearchPrefilterable, IsWorkflowFilterable, Label, Length, MasterLabel, Precision, PublisherId, QualifiedApiName, ReferenceTo, RelationshipName, RunningUserFieldAccessId, Scale, SecurityClassification, ServiceDataTypeId, ValueTypeId
+
+Saleforce Field API properties for User Object - based on Refined property list above
+=====================================================================
+DataType, DeveloperName, DurableId, EntityDefinitionId, ExtraTypeInfo, Id, IsAiPredictionField, IsApiFilterable, IsApiGroupable, IsApiSortable, IsCalculated, IsCompactLayoutable, IsCompound, IsFieldHistoryTracked, IsHighScaleNumber, IsHtmlFormatted, IsIndexed, IsListFilterable, IsListSortable, IsListVisible, 
+IsNameField, IsNillable, IsPolymorphicForeignKey, IsSearchPrefilterable, IsWorkflowFilterable, Label, Length, MasterLabel, Precision, PublisherId, QualifiedApiName, ReferenceTo, RelationshipName, RunningUserFieldAccessId, Scale, SecurityClassification, ServiceDataTypeId, ValueTypeId
+
+
+

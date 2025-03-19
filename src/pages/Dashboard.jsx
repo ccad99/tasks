@@ -1,4 +1,4 @@
-import backgroundImage from "./assets/bluesky.jpg";
+import backgroundImage from "../assets/bluesky.jpg";
 import styles from "./Dashboard.module.css";
 
 function Dashboard() {

@@ -1,0 +1,36 @@
+.taskTableContainer {
+   height: 500px; /* Defined height */
+   overflow-y: auto; /* Enable vertical scrolling */
+   border: 3px solid #ddd;
+   /* background-color: rgb(216, 230, 254); */
+   background-color: rgb(249, 246, 246);
+}
+
+.taskTable {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.taskTable th {
+   position: sticky;
+   top: 0;
+   background: #f8f8f8;
+   text-align: left;
+   padding: 10px;
+   border-bottom: 2px solid #ccc;
+}
+
+.taskTable td {
+   padding: 10px;
+   border-bottom: 1px solid #ddd;
+}
+
+.taskTable tbody tr:hover {
+   background-color: #f2f2f2;
+}
+
+select {
+   appearance: auto; /* Ensures default dropdown behavior */
+   position: relative;
+   z-index: 10; /* Ensures it appears above other elements */
+}

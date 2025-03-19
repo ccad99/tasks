@@ -1,0 +1,98 @@
+.acctTableContainer {
+   height: 800px; /* Defined height */
+   overflow-y: auto; /* Enable vertical scrolling */
+   border: 3px solid #ddd;
+   /* background-color: rgb(216, 230, 254); */
+   background-color: rgb(249, 246, 246);
+}
+
+.acctTable {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.acctTable th {
+   position: sticky;
+   top: 0;
+   background: #f8f8f8;
+   text-align: left;
+   padding: 10px;
+   border-bottom: 2px solid #ccc;
+   cursor: pointer;
+   user-select: none;
+   /* display: flex;
+   align-items: center;
+   justify-content: space-between; */
+}
+
+.acctTable th:hover {
+   background-color: #e2e8f0;
+}
+
+.acctTable td {
+   padding: 5px 10px;
+   border-bottom: 1px solid #ddd;
+}
+
+.acctTable tbody tr:hover {
+   background-color: #f2f2f2;
+}
+
+.sortIcon {
+   margin-left: 10px;
+   display: inline-flex;
+   align-items: center;
+}
+
+.rowMenu {
+   position: relative;
+}
+
+.menuBtn {
+   background: none;
+   border: none;
+   cursor: pointer;
+   font-size: 1rem;
+   padding: 5px;
+}
+
+.menuDropDown {
+   position: absolute;
+   top: 100%;
+   left: -40px; /*Shift slightly left */
+   background: white;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   min-width: 120px;
+   z-index: 15;
+   display: flex;
+   flex-direction: column;
+}
+
+.menuDropDown button:hover {
+   background-color: #f0f0f0;
+}
+
+.deleteButton {
+   color: red;
+   font-weight: bold;
+}
+
+select {
+   appearance: auto; /* Ensures default dropdown behavior */
+   position: relative;
+   z-index: 10;
+}
+
+thead {
+   z-index: 0;
+   position: relative;
+}
+
+/* .angleDown {
+   border: 2px solid rgb(108, 108, 108);
+   margin-top: 10px;
+   width: 12px;
+   height: 12px;
+} */

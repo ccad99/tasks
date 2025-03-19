@@ -1,0 +1,22 @@
+input.input-error,
+select.select-error {
+   border-color: #d62a2a;
+}
+
+button {
+   display: block;
+   margin: 1rem, 0;
+   padding: 0.035rem 0.5rem;
+   background-color: #4299e1;
+   color: #1a202c;
+   border: none;
+   border-radius: 3px;
+   width: 100%;
+   font-size: 1rem;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+button:disabled {
+   opacity: 0.35;
+}

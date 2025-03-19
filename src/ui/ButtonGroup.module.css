@@ -1,0 +1,38 @@
+.buttonContainer {
+   display: flex;
+   justify-content: center;
+   gap: 12px;
+   background-color: #e2e8f0;
+   padding: 12px;
+   border-radius: 0 0 8px 8px;
+   margin-top: 10px;
+}
+
+button {
+   margin: 5px 5px;
+   padding: 10px 16px;
+   border-radius: 4px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: background 0.2s ease-in-out;
+}
+
+.cancelButton {
+   border: 1px solid #2563eb;
+   color: #2563eb;
+   background-color: white;
+}
+
+.cancelButton:hover {
+   background-color: #bfdbfe;
+}
+
+.primaryButton {
+   background-color: #2563eb;
+   color: white;
+   border: none;
+}
+
+.primaryButton:hover {
+   background-color: #1e40af;
+}
