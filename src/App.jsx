@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -11,7 +12,10 @@ import ContactPage from "./pages/ContactPage";
 // import PageNotFound from "./pages/PageNotFound";
 import ViewAccountPage from "./components/accounts/ViewAccountPage";
 import ViewContactPage from "./components/contacts/ViewContactPage";
+import ViewTaskPage from "./components/tasks/ViewTaskPage";
 import { Toaster } from "react-hot-toast";
+
+import { setMockUser } from "./utils/mockUserDevSetup";
 
 // import Services from "./services/supabase.js";  /* Used for testing */
 
@@ -24,13 +28,9 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-   // TESTING - Supabase connectivity
-   // console.log("This is the URL");
-   // console.log(Services.supabaseUrl);
-   // console.log(import.meta.env.VITE_APP_URL);
-   // console.log("This is the ANON KEY");
-   // console.log(Services.supabaseKey);
-   // console.log(import.meta.env.VITE_APP_ANON_KEY);
+   useEffect(() => {
+      setMockUser(queryClient);
+   }, [queryClient]);
 
    return (
       <QueryClientProvider client={queryClient}>
@@ -53,6 +53,11 @@ function App() {
                   />{" "}
                   {/* New Dynamic Route */}
                   <Route path="/tasks" element={<TaskPage />} />
+                  <Route
+                     path="/tasks/:custom_id"
+                     element={<ViewTaskPage />}
+                  />{" "}
+                  {/* New Dynamic Route */}
                   <Route path="/login" element={<LoginPage />} />
                   {/* <Route path="*" element={<PageNotFound />} /> */}
                </Routes>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import AccountModal from "./AccountModal";
+// import AccountModal from "./AccountModal";
+import SharedModal from "../Shared/SharedModal";
 import { useCreateAccount } from "./useCreateAccount";
 import { useUpdateAccount } from "./useUpdateAccount";
 import styles from "./AccountForm.module.css";
@@ -124,7 +125,7 @@ const AccountForm = ({ onClose, account: initialAccount }) => {
    });
 
    return (
-      <AccountModal isOpen onClose={onClose}>
+      <SharedModal isOpen onClose={onClose}>
          <div className={styles.modalHeader}>
             <h2>{isEditing ? `Edit ${account.name}` : "New Account"}</h2>
          </div>
@@ -364,7 +365,7 @@ const AccountForm = ({ onClose, account: initialAccount }) => {
                </button>
             </div>
          </form>
-      </AccountModal>
+      </SharedModal>
    );
 };
 

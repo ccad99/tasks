@@ -1,28 +1,43 @@
 import React, { useState } from "react";
+import SharedModal from "../Shared/SharedModal";
+import TaskForm from "./TaskForm";
 import styles from "./TaskHeader.module.css";
 
-function TaskHeader({ onSearch, onFilterChange, taskCount }) {
+function TaskHeader({ onSearch, onFilterChange, count, sortBy, order }) {
    const [filter, setFilter] = useState("all");
+   const [isModalOpen, setIsModalOpen] = useState(false);
 
    const handleFilterChange = (e) => {
       setFilter(e.target.value);
       onFilterChange(e.target.value); // Pass selected filter to parent component
    };
 
+   const formattedOrder = order === "asc" ? "Ascending" : "Descending";
+
+   const sortByLabels = {
+      name: "Subject",
+      who_id: "Name",
+      what_id: "Related To",
+      due_date: "Due Date",
+      status: "Status",
+      priority: "Priority",
+   };
+
+   const formattedSortBy = sortByLabels[sortBy] || "Name";
+
    return (
       <div className={styles.taskHeader}>
          <div>
             <select name="tasks" id="task-select">
-               <option value="delegated">Delegated Tasks</option>
                <option value="open">Open Tasks</option>
                <option value="overdue">Overdue Tasks</option>
-               <option value="recentlycompleted">Recently Completed</option>
-               <option value="recentlyviewed">Recently Viewed</option>
-               <option value="recurring">Recurring Tasks</option>
+               <option value="completed">Completed Tasks</option>
                <option value="todays">Todays Tasks</option>
                <option value="unscheduled">Unscheduled Tasks</option>
             </select>
-            <h4>{taskCount} Tasks - Sorted by Due Date</h4>
+            <h4>
+               {count} Tasks - Sorted by {formattedSortBy}, {formattedOrder}
+            </h4>
          </div>
 
          <div>
@@ -44,8 +59,22 @@ function TaskHeader({ onSearch, onFilterChange, taskCount }) {
                <option value="open">Open Tasks</option>
                <option value="completed">Completed Tasks</option>
             </select> */}
-            <button className={styles.newTaskButton}>+ New Task</button>
+            <button
+               className={styles.newTaskButton}
+               onClick={() => setIsModalOpen(true)}
+            >
+               + New Task
+            </button>
          </div>
+         {/* Render TaskForm inside SharedModal when isModalOpen is true */}
+         {isModalOpen && (
+            <SharedModal
+               isOpen={isModalOpen}
+               onClose={() => setIsModalOpen(false)}
+            >
+               <TaskForm onClose={() => setIsModalOpen(false)} />
+            </SharedModal>
+         )}
       </div>
    );
 }

@@ -18,7 +18,7 @@ export async function signup({ fullName, email, password }) {
 }
 
 /*
- *  FUNCTION - LOGIN
+ *     FUNCTION - LOGIN
  */
 
 export async function login({ email, password }) {
@@ -29,7 +29,21 @@ export async function login({ email, password }) {
 
    if (error) throw new Error(error.message);
 
-   return data;
+   // Fetch the user from your `users` table to get `custom_id`
+   const { data: userRecord, error: userError } = await supabase
+      .from("users")
+      .select("custom_id, email, role")
+      .eq("email", email)
+      .single();
+
+   if (userError || !userRecord) throw new Error("User record not found.");
+
+   // Attach custom_id to the returned user object
+   return {
+      ...data,
+      custom_id: userRecord.custom_id,
+      role: userRecord.role,
+   };
 }
 
 /*
@@ -40,11 +54,54 @@ export async function getCurrentUser() {
    const { data: session } = await supabase.auth.getSession();
    if (!session.session) return null;
 
-   const { data, error } = await supabase.auth.getUser();
-   if (error) throw new Error(error.message);
+   // Fetch the user from the `users` table
+   const { data: userRecord, error: userError } = await supabase
+      .from("users")
+      .select("custom_id, email, role")
+      .eq("email", session.session.user.email)
+      .single();
 
-   return data?.user;
+   if (userError || !userRecord) throw new Error("User record not found.");
+
+   return {
+      custom_id: userRecord.custom_id,
+      email: session.session.user.email,
+      role: userRecord.role,
+   };
 }
+
+/*
+ *  ****  OLD   OLD   OLD   OLD  ****
+ */
+
+/*
+ *   FUNCTION - LOGIN
+ */
+
+// export async function login({ email, password }) {
+//    let { data, error } = await supabase.auth.signInWithPassword({
+//       email,
+//       password,
+//    });
+
+//    if (error) throw new Error(error.message);
+
+//    return data;
+// }
+
+/*
+ *  FUNCTION - GET CURENT USER
+ */
+
+// export async function getCurrentUser() {
+//    const { data: session } = await supabase.auth.getSession();
+//    if (!session.session) return null;
+
+//    const { data, error } = await supabase.auth.getUser();
+//    if (error) throw new Error(error.message);
+
+//    return data?.user;
+// }
 
 /*
  *  FUNCTION - LOGOUT

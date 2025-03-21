@@ -34,6 +34,51 @@ export async function getTasksSorted(sortBy = "subject", order = "asc") {
 }
 
 /*
+ *   Function - getTasks -- query to query the view instead of the table
+ */
+
+// export async function getTasksSorted(sortBy = "created_date", order = "asc") {
+//    const { data, error } = await supabase
+//       .from("task_view")
+//       .select("*")
+//       .order(sortBy, { ascending: order === "asc" });
+
+//    if (error) {
+//       console.error("Error fetching sorted tasks:", error.message);
+//       return [];
+//    }
+
+//    return data;
+// }
+
+/*
+ *    Function - getTasksFiltered  -- queries the View to get filtered tasks
+ */
+
+// export async function getTasksFiltered(filters = {}) {
+//    let query = supabase.from("task_view").select("*");
+
+//    if (filters.status) {
+//       query = query.eq("status", filters.status);
+//    }
+//    if (filters.priority) {
+//       query = query.eq("priority", filters.priority);
+//    }
+//    if (filters.assignedTo) {
+//       query = query.eq("assigned_to_name", filters.assignedTo);
+//    }
+
+//    const { data, error } = await query;
+
+//    if (error) {
+//       console.error("Error fetching filtered tasks:", error.message);
+//       return [];
+//    }
+
+//    return data;
+// }
+
+/*
  *    Function - getTasksFromView  -- queries the View to get filtered tasks
  *    passing sortBy, order, and filters with defaults set
  */

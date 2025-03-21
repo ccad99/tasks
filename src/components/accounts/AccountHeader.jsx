@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AccountForm from "./AccountForm";
-import AccountModal from "./AccountModal";
+// import AccountModal from "./AccountModal";
+import SharedModal from "../Shared/SharedModal";
 import styles from "./AccountHeader.module.css";
 
 function AccountHeader({ onSearch, onFilterChange, count, sortBy, order }) {
@@ -65,12 +66,12 @@ function AccountHeader({ onSearch, onFilterChange, count, sortBy, order }) {
          </div>
          {/* Render AccountForm inside AccountModal when isModalOpen is true */}
          {isModalOpen && (
-            <AccountModal
+            <SharedModal
                isOpen={isModalOpen}
                onClose={() => setIsModalOpen(false)}
             >
                <AccountForm onClose={() => setIsModalOpen(false)} />
-            </AccountModal>
+            </SharedModal>
          )}
       </div>
    );

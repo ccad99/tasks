@@ -1,22 +1,141 @@
-input.input-error,
-select.select-error {
-   border-color: #d62a2a;
+.pageContainer {
+   max-height: 600px;
+   overflow-y: scroll;
+   background-color: #f5f5f8;
+   margin: 20px 10px;
+}
+
+.modalHeader {
+   margin-bottom: 20px;
+}
+
+.sectionHeader {
+   background-color: #e2e8f0;
+   padding: 8px 12px;
+   border-radius: 4px;
+   font-weight: bold;
+   font-size: 1rem;
+   margin: 20px 0 10px;
+}
+
+.sectionHeader:first-of-type {
+   margin: 0px 0px 10px;
+}
+
+.gridContainer {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 16px;
+   width: 100%;
+}
+
+.column {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   padding: 0 16px;
+}
+
+h2 {
+   text-align: center;
+   font-size: x-large;
+   font-weight: 500;
+   margin: 2px 0;
+}
+
+label {
+   font-weight: bold;
+}
+
+.inputField {
+   display: flex;
+   flex-direction: column;
+}
+
+.displayField {
+}
+
+input,
+textarea {
+   width: 100%;
+   max-width: 100%;
+   padding: 8px;
+   border: 2px solid #ccc;
+   border-radius: 4px;
+   font-size: 1rem;
+   outline: none;
+}
+
+input:focus,
+textarea:focus {
+   border-color: #2563eb;
+   box-shadow: 0 0 4px rgba(37, 99, 236, 0.5);
+}
+
+textArea {
+   resize: vertical;
+   min-height: 60px;
+   max-height: 200px;
+   overflow: hidden;
+}
+
+.errorMessage {
+   color: red;
+   font-size: 0.875rem;
+}
+
+.buttonContainer {
+   display: flex;
+   justify-content: center;
+   gap: 12px;
+   background-color: #e2e8f0;
+   padding: 12px;
+   border-radius: 0 0 8px 8px;
+   margin-top: 10px;
 }
 
 button {
-   display: block;
-   margin: 1rem, 0;
-   padding: 0.035rem 0.5rem;
-   background-color: #4299e1;
-   color: #1a202c;
-   border: none;
-   border-radius: 3px;
-   width: 100%;
+   margin: 5px 5px;
+   padding: 10px 16px;
+   border-radius: 4px;
    font-size: 1rem;
-   font-weight: bold;
    cursor: pointer;
+   transition: background 0.2s ease-in-out;
 }
 
-button:disabled {
-   opacity: 0.35;
+.cancelButton {
+   border: 1px solid #2563eb;
+   color: #2563eb;
+   background-color: white;
+}
+
+.cancelButton:hover {
+   background-color: #bfdbfe;
+}
+
+.primaryButton {
+   background-color: #2563eb;
+   color: white;
+   border: none;
+}
+
+.primaryButton:hover {
+   background-color: #1e40af;
+}
+
+.errorInput {
+   border: 2px solid red !important;
+   background-color: #ffe6e6;
+}
+
+.errorMessage {
+   color: red;
+   font-size: 0.875rem;
+   margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+   .gridContainer {
+      grid-template-columns: 1fr; /* Switch to single column */
+   }
 }
