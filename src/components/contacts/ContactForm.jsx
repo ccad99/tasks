@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import SharedModal from "../Shared/SharedModal";
@@ -223,71 +223,6 @@ const ContactForm = ({ onClose, contact: initialContact }) => {
                   </div>
                </div>
 
-               {/* Address Section */}
-               {/* <h3 className={styles.sectionHeader}>Address Information</h3>
-               <div className={styles.gridContainer}>
-                  <div className={styles.column}>
-                     <label>Street1</label>
-                     <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="street1"
-                           onChange={formik.handleChange}
-                           value={formik.values.street1}
-                        />
-                     </div>
-                     <label>Street2</label>
-                     <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="street2"
-                           onChange={formik.handleChange}
-                           value={formik.values.street2}
-                        />
-                     </div>
-                  </div>
-                  <div className={styles.column}>
-                     <label>City</label>
-                     <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="city"
-                           onChange={formik.handleChange}
-                           value={formik.values.city}
-                        />
-                     </div>
-
-                     <label>State</label>
-                     <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="state"
-                           onChange={formik.handleChange}
-                           value={formik.values.state}
-                        />
-                     </div>
-
-                     <label>Zipcode</label>
-                     <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="zipcode"
-                           onChange={formik.handleChange}
-                           value={formik.values.zipcode}
-                        />
-                     </div>
-
-                     <label>Country</label>
-                     <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="country"
-                           onChange={formik.handleChange}
-                           value={formik.values.country}
-                        />
-                     </div>
-                  </div>
-               </div> */}
                {/* Audit Section - Created By / Last Modified By -- only on Edit */}
                {isEditing && (
                   <>

@@ -1,0 +1,15 @@
+.modalOverlay {
+   position: fixed;
+   top: 25%; /* Center in top half */
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 1000;
+   background-color: white;
+   border: 1px solid #ccc;
+   padding: 2rem;
+   border-radius: 8px;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+   max-width: 500px;
+   width: 90%;
+   text-align: center;
+}

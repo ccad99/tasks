@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SharedModal from "../Shared/SharedModal";
 import ContactForm from "./ContactForm";
 import styles from "./ContactHeader.module.css";

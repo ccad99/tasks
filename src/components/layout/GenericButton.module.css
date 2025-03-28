@@ -1,0 +1,37 @@
+.wrapper {
+   position: relative;
+}
+
+.button {
+   background: none;
+   border: none;
+   font-size: 1.8rem;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   /* color: inherit; */
+   color: var(--color-grey-700);
+   transition: color 0.2s;
+}
+
+.button:hover {
+   color: var(--color-red-700);
+}
+
+.home {
+   margin-bottom: 12px;
+}
+
+.modal {
+   position: absolute;
+   top: 100%; /* Just below the icon */
+   right: 20px;
+   background-color: var(--color-grey-0);
+   border: 1px solid var(--color-grey-200);
+   border-radius: var(--border-radius-sm);
+   box-shadow: var(--shadow-sm);
+   padding: 1rem 1.2rem;
+   z-index: 10;
+   white-space: nowrap;
+   font-size: 1.4rem;
+}

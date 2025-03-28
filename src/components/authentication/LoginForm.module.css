@@ -1,0 +1,182 @@
+/* .main {
+   overflow: auto;
+   padding-bottom: 48px;
+} */
+
+.main {
+   min-height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: flex-start;
+   background-color: var(--color-grey-100);
+}
+
+.wrapper {
+   width: 100%;
+   max-width: 420px;
+}
+
+.standard_logo_wrapper {
+   height: 113px;
+   width: 180px;
+   margin: 0 auto 1rem auto;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.content {
+   display: block;
+}
+
+.formContainer {
+}
+
+.loginForm {
+   max-width: 400px;
+   background-color: var(--color-grey-0);
+   border: 1px solid var(--color-grey-300);
+   border-radius: var(--border-radius-md);
+   padding: 10px;
+}
+
+.inputGroup {
+   position: relative;
+}
+
+h2 {
+   text-align: center;
+   font-size: x-large;
+   font-weight: 500;
+   margin: 2px 0;
+}
+
+label {
+   font-weight: bold;
+   font-size: 12px;
+   color: var(--color-blue-grey-500);
+   margin: 0 0 8px 0;
+   line-height: inherit;
+}
+
+.inputField {
+   display: flex;
+   flex-direction: column;
+}
+
+input {
+   width: 100%;
+   max-width: 100%;
+   padding: 8px;
+   border: 2px solid #ccc;
+   border-radius: 4px;
+   font-size: 1rem;
+   outline: none;
+}
+
+input:focus {
+   border-color: var(--color-blue-500);
+   box-shadow: 0 0 4px var(--color-blue-600);
+}
+
+.pwcaps {
+   display: flex;
+   font-size: 12px;
+   color: #54698d;
+   padding: 8px 0 0 4px;
+}
+
+.remContainer {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   margin: 8px 8px;
+}
+
+.remContainer input[type="checkbox"] {
+   width: 16px;
+   height: 16px;
+   accent-color: var(--color-blue-500);
+}
+
+.remLabel {
+   font-size: 0.875rem;
+   font-weight: normal;
+}
+
+.errorMessage {
+   color: red;
+   font-size: 0.875rem;
+}
+
+.buttonContainer {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: 8px;
+   background-color: #e2e8f0;
+   padding: 12px;
+   border-radius: 0 0 8px 8px;
+   margin-top: 10px;
+}
+
+button {
+   margin: 5px 5px;
+   padding: 10px 16px;
+   border-radius: 4px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: background 0.2s ease-in-out;
+}
+
+.primary {
+   background-color: var(--color-blue-500);
+   color: white;
+   transition: all 0.1s;
+   border: 1px solid transparent;
+}
+
+.cancelButton {
+   border: 1px solid var(--color-blue-500);
+   color: var(--color-blue-500);
+   background-color: white;
+}
+
+.cancelButton:hover {
+   background-color: #bfdbfe;
+}
+
+.primaryButton {
+   background-color: var(--color-blue-500);
+   color: white;
+   border: none;
+}
+
+.primaryButton:hover {
+   background-color: var(--color-blue-700);
+}
+
+.errorInput {
+   border: 2px solid red !important;
+   background-color: #ffe6e6;
+}
+
+.errorMessage {
+   color: red;
+   font-size: 0.875rem;
+   margin-top: 4px;
+}
+
+/* Switch to single column */
+/* 
+@media (max-width: 600px) {
+   .gridContainer {
+      grid-template-columns: 1fr; 
+   }
+} */
+
+@media only screen and (max-height: 670px) {
+   #wrapper {
+      padding-top: 40px;
+   }
+}

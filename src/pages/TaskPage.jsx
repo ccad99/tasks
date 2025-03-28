@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TaskHeader from "../components/Tasks/TaskHeader";
 import TaskTable from "../components/Tasks/TaskTable";
 import { useTasksSorted } from "../components/Tasks/useTasksSorted";
+import Spinner from "../ui/Spinner";
 
 function TaskPage() {
    const [sortBy, setSortBy] = useState("subject"); // Default column
@@ -9,7 +10,14 @@ function TaskPage() {
 
    const { tasks, isLoading, error } = useTasksSorted(sortBy, order);
 
-   if (isLoading) return <p>Loading tasks...</p>;
+   // if (isLoading) return <p>Loading tasks...</p>;
+   if (isLoading)
+      return (
+         <div style={{ minHeight: "300px" }}>
+            <Spinner useAlt />
+         </div>
+      );
+
    if (error) return <p>Error loading tasks: {error.message}</p>;
 
    // Function to update sorting and trigger refetch

@@ -219,10 +219,6 @@ const AccountForm = ({ onClose, account: initialAccount }) => {
                         <input
                            type="text"
                            name="website"
-                           // onChange={(e) => {
-                           //    formik.setFieldTouched("website", true); // Mark field as touched
-                           //    formik.setFieldValue("website", e.target.value); // Update the value
-                           // }}
                            onChange={formik.handleChange}
                            onBlur={formik.handleBlur}
                            value={formik.values.website}

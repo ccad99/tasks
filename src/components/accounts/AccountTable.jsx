@@ -7,6 +7,7 @@ import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
 import { HiArrowLongUp } from "react-icons/hi2";
 import { HiArrowLongDown } from "react-icons/hi2";
 import styles from "./AccountTable.module.css";
+import Spinner from "../../ui/Spinner";
 
 const AccountTable = ({ accounts, sortBy, order, handleSort }) => {
    const [menuOpenRow, setMenuOpenRow] = useState(null);

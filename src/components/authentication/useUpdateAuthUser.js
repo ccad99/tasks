@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCurrentUser as updateCurrentUserApi } from "../../services/apiAuth";
 import toast from "react-hot-toast";
 
-export function useUpdateUser() {
+export function useUpdateAuthUser() {
    const queryClient = useQueryClient();
 
-   const { mutate: updateUser, isLoading: isUpdating } = useMutation({
+   const { mutate: updateAuthUser, isLoading: isUpdating } = useMutation({
       //mutation function can only accept one argument, so pass an object and destructure it inside the function call
       mutationFn: updateCurrentUserApi,
       onSuccess: ({ user }) => {
@@ -18,5 +18,5 @@ export function useUpdateUser() {
       onError: (err) => toast.error(err.message),
    });
 
-   return { isUpdating, updateUser };
+   return { isUpdating, updateAuthUser };
 }

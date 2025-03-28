@@ -1,89 +1,81 @@
-import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
-import PageHeader from "./pages/PageHeader";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Login from "./pages/Login";
+import { useAutoLogoutPrompt } from "./components/authentication/useAutoLogoutPrompt";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import UpdatePasswordPage from "./pages/UpdatePasswordPage";
+import AppLayout from "./components/layout/AppLayout.jsx";
 import Dashboard from "./pages/Dashboard";
 import TaskPage from "./pages/TaskPage";
-import LoginPage from "./pages/LoginPage";
 import AccountPage from "./pages/AccountPage";
 import ContactPage from "./pages/ContactPage";
-// import PageNotFound from "./pages/PageNotFound";
 import ViewAccountPage from "./components/accounts/ViewAccountPage";
 import ViewContactPage from "./components/contacts/ViewContactPage";
 import ViewTaskPage from "./components/tasks/ViewTaskPage";
+import ProtectedRoute from "./ui/ProtectedRoute.jsx";
+import PageNotFound from "./pages/PageNotFound";
+import ComingSoon from "./pages/ComingSoon";
 import { Toaster } from "react-hot-toast";
-
-import { setMockUser } from "./utils/mockUserDevSetup";
-
-// import Services from "./services/supabase.js";  /* Used for testing */
-
-const queryClient = new QueryClient({
-   defaultOptions: {
-      queries: {
-         staleTime: 60 * 1000,
-      },
-   },
-});
+import "./index.css";
+import "./styles/global.css";
 
 function App() {
-   useEffect(() => {
-      setMockUser(queryClient);
-   }, [queryClient]);
+   useAutoLogoutPrompt(90); // 90 minutes for dev
 
    return (
-      <QueryClientProvider client={queryClient}>
+      <>
          <ReactQueryDevtools initialIsOpen={false} />
          <BrowserRouter>
-            <div>
-               <PageHeader />
-               <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/accounts" element={<AccountPage />} />
+            <Routes>
+               <Route
+                  element={
+                     <ProtectedRoute>
+                        <AppLayout />
+                     </ProtectedRoute>
+                  }
+               >
+                  <Route index element={<Navigate replace to="/dashboard" />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="accounts" element={<AccountPage />} />
                   <Route
-                     path="/accounts/:custom_id"
+                     path="accounts/:custom_id"
                      element={<ViewAccountPage />}
-                  />{" "}
-                  {/* New Dynamic Route */}
-                  <Route path="/contacts" element={<ContactPage />} />
+                  />
+                  <Route path="contacts" element={<ContactPage />} />
                   <Route
-                     path="/contacts/:custom_id"
+                     path="contacts/:custom_id"
                      element={<ViewContactPage />}
-                  />{" "}
-                  {/* New Dynamic Route */}
-                  <Route path="/tasks" element={<TaskPage />} />
-                  <Route
-                     path="/tasks/:custom_id"
-                     element={<ViewTaskPage />}
-                  />{" "}
-                  {/* New Dynamic Route */}
-                  <Route path="/login" element={<LoginPage />} />
-                  {/* <Route path="*" element={<PageNotFound />} /> */}
-               </Routes>
-            </div>
+                  />
+                  <Route path="tasks" element={<TaskPage />} />
+                  <Route path="tasks/:custom_id" element={<ViewTaskPage />} />
+                  <Route path="/coming-soon" element={<ComingSoon />} />
+               </Route>
+               <Route path="login" element={<Login />} />
+               <Route path="/reset-password" element={<ResetPasswordPage />} />
+               <Route
+                  path="/update-password"
+                  element={<UpdatePasswordPage />}
+               />
+               <Route path="*" element={<PageNotFound />} />
+            </Routes>
          </BrowserRouter>
          <Toaster
             position="top-center"
             gutter={12}
             containerStyle={{ margin: "8px" }}
             toastOptions={{
-               success: {
-                  duration: 3000,
-               },
-               error: {
-                  duration: 5000,
-               },
+               success: { duration: 3000 },
+               error: { duration: 5000 },
                style: {
                   fontSize: "16px",
                   maxWidth: "500px",
                   padding: "16px 24px",
                   backgroundColor: "var(--color-grey-100)",
-                  color: "var(--color-grey-700",
+                  color: "var(--color-grey-700)",
                },
             }}
          />
-      </QueryClientProvider>
+      </>
    );
 }
 

@@ -22,12 +22,21 @@ export async function signup({ fullName, email, password }) {
  */
 
 export async function login({ email, password }) {
+   console.log("📩 login(): Called with", email);
+
    let { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
    });
 
-   if (error) throw new Error(error.message);
+   if (error) {
+      console.error("❌ Auth error:", error.message);
+      throw new Error(error.message);
+   }
+
+   console.log("✅ Auth success:", data);
+
+   // if (error) throw new Error(error.message);
 
    // Fetch the user from your `users` table to get `custom_id`
    const { data: userRecord, error: userError } = await supabase
@@ -36,14 +45,22 @@ export async function login({ email, password }) {
       .eq("email", email)
       .single();
 
-   if (userError || !userRecord) throw new Error("User record not found.");
+   if (userError || !userRecord) {
+      console.error("❌ Supabase 'users' lookup failed:", userError);
+      throw new Error("User record not found.");
+   }
+
+   console.log("✅ Found user record:", userRecord);
 
    // Attach custom_id to the returned user object
-   return {
+   const finalUser = {
       ...data,
       custom_id: userRecord.custom_id,
       role: userRecord.role,
    };
+
+   console.log("🎉 Final returned user object:", finalUser);
+   return finalUser;
 }
 
 /*
@@ -69,43 +86,6 @@ export async function getCurrentUser() {
       role: userRecord.role,
    };
 }
-
-/*
- *  ****  OLD   OLD   OLD   OLD  ****
- */
-
-/*
- *   FUNCTION - LOGIN
- */
-
-// export async function login({ email, password }) {
-//    let { data, error } = await supabase.auth.signInWithPassword({
-//       email,
-//       password,
-//    });
-
-//    if (error) throw new Error(error.message);
-
-//    return data;
-// }
-
-/*
- *  FUNCTION - GET CURENT USER
- */
-
-// export async function getCurrentUser() {
-//    const { data: session } = await supabase.auth.getSession();
-//    if (!session.session) return null;
-
-//    const { data, error } = await supabase.auth.getUser();
-//    if (error) throw new Error(error.message);
-
-//    return data?.user;
-// }
-
-/*
- *  FUNCTION - LOGOUT
- */
 
 export async function logout() {
    const { error } = await supabase.auth.signOut();

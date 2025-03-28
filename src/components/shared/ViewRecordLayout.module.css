@@ -12,23 +12,16 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
-   /* background: #f8f9fa; */
    background: #f1f1f1;
    padding: 15px 30px;
    border-radius: 4px;
 }
 
-/* .headerTop {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+.backLink {
+   color: rgb(35, 91, 109);
+   font-size: 1.8rem;
+   font-weight: 700;
 }
-
-.headerBottom {
-   display: flex;
-   justify-content: space-between;
-   margin-top: 10px;
-} */
 
 .contentContainer {
    display: flex;
@@ -39,41 +32,84 @@
 .leftColumn {
    width: 60%;
    background: white;
-   /* background: #f1f1f1; */
    padding: 10px;
    border-radius: 4px;
-   /* margin-left: 5px; */
    margin-bottom: 5px;
 }
 
 .rightColumn {
    width: 40%;
    background: white;
-   /* background: #f1f1f1; */
    padding: 10px;
    border-radius: 4px;
-   /* margin-right: 5px; */
    margin-bottom: 5px;
 }
 
-/* .gridContainer {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 10px;
-} */
+.taskListContainer {
+   margin-top: 0;
+   background-color: #f9f9f9;
+   border: 1px solid #ccc;
+   border-radius: 6px;
+   padding: 1rem;
+   padding-top: 0.25rem;
+   max-height: 300px;
+   overflow-y: auto;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-/* .column {
-   display: flex;
-   flex-direction: column;
-   gap: 5px;
-} */
+.taskListContainer h3 {
+   margin-top: 0;
+   margin-bottom: 10px;
+   font-size: 1.1rem;
+   color: #333;
+   border-bottom: 1px solid #ccc;
+   padding-bottom: 10px;
+}
+
+.taskList {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+.taskItem {
+   background-color: white;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   padding: 10px;
+   margin-bottom: 8px;
+   transition: background 0.2s;
+}
+
+.taskItem:hover {
+   background-color: #f0f8ff;
+}
+
+.taskItem strong {
+   display: block;
+   color: #007bff;
+   margin-bottom: 4px;
+}
+
+.taskItem p {
+   margin: 0;
+   font-size: 0.9rem;
+   color: #555;
+}
+
+.taskLink {
+   text-decoration: none;
+   color: var(--color-blue-600);
+}
+
+.taskLink:hover {
+   text-decoration: underline;
+}
 
 p {
-   /* background: #fff; */
    background: #f1f1f1;
    padding: 5px;
    border-radius: 4px;
-   /* border: 1px solid #ddd; */
    border: 1px solid #979696;
 }
 

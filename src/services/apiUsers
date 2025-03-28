@@ -1,0 +1,15 @@
+// src/services/apiUsers.js
+
+import supabase from "./supabase";
+
+// General purpose user update
+export async function updateUserFields(custom_id, fieldsToUpdate) {
+   const { data, error } = await supabase
+      .from("users")
+      .update(fieldsToUpdate)
+      .eq("custom_id", custom_id)
+      .select(); // optional, returns the updated record
+
+   if (error) throw new Error(error.message);
+   return data[0]; // returns the updated user
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AccountHeader from "../components/Accounts/AccountHeader";
 import AccountTable from "../components/Accounts/AccountTable";
 import { useAccountsSorted } from "../components/Accounts/useAccountsSorted";
+import Spinner from "../ui/Spinner";
 
 function AccountPage() {
    const [sortBy, setSortBy] = useState("name"); // Default column
@@ -9,7 +10,15 @@ function AccountPage() {
 
    const { accounts, isLoading, error } = useAccountsSorted(sortBy, order);
 
-   if (isLoading) return <p>Loading accounts...</p>;
+   // if (isLoading) return <p>Loading accounts...</p>;
+
+   if (isLoading)
+      return (
+         <div style={{ minHeight: "300px" }}>
+            <Spinner useAlt />
+         </div>
+      );
+
    if (error) return <p>Error loading accounts: {error.message}</p>;
 
    // Function to update sorting and trigger refetch

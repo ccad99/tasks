@@ -1,35 +1,76 @@
 import React, { useState, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import SharedModal from "../Shared/SharedModal";
 import { useCreateTask } from "./useCreateTask";
 import { useUpdateTask } from "./useUpdateTask";
 import { format, parseISO } from "date-fns";
+import { getCurrentUser } from "../../services/apiAuth";
+import UserLookup from "../shared/UserLookup";
+import toast from "react-hot-toast";
 import styles from "./TaskForm.module.css";
 
-function TaskForm({ onClose, task: initialTask }) {
+function TaskForm({ onClose, onSuccess, task: initialTask }) {
+   const queryClient = useQueryClient();
+
    const [task, setTask] = useState(initialTask);
    const [isEditing, setIsEditing] = useState(!!initialTask);
 
    const { createTask, isCreating } = useCreateTask();
    const { updateTask, isUpdating } = useUpdateTask();
 
-   const saveAndNewRef = useRef(false);
+   const saveAndNew = useRef(false);
 
-   const handleSave = (values, saveAndNew, resetForm, onClose) => {
+   const handleSave = async (
+      values,
+      saveAndNew,
+      resetForm,
+      onClose,
+      onSuccess
+   ) => {
+      let user = queryClient.getQueryData(["user"]);
+
+      // Fallback to Supabase if user is not in cache
+      if (!user) {
+         try {
+            user = await getCurrentUser();
+            if (user) {
+               queryClient.setQueryData(["user"], user);
+            }
+         } catch (err) {
+            console.error("Failed to fetch user:", err);
+         }
+      }
+
+      if (!user || !user.custom_id) {
+         console.error("No logged-in user available during task update.");
+         toast.error("You must be logged in to perform this action.");
+         return;
+      }
+
       if (isEditing) {
          updateTask(
-            { custom_id: task.custom_id, updateFields: values },
-            { context: { saveAndNew, resetForm, onClose } }
+            { custom_id: task.custom_id, updateFields: values, user },
+            { saveAndNew, resetForm, onClose, onSuccess }
          );
       } else {
          createTask(values, {
-            context: { saveAndNew, resetForm, onClose },
+            saveAndNew,
+            resetForm,
+            onClose,
+            onSuccess,
          });
       }
-      //reset for next usage
-      saveAndNewRef.current = false;
+
+      saveAndNew.current = false;
    };
+
+   const cachedUser = queryClient.getQueryData(["user"]);
+   const defaultAssignedTo =
+      !isEditing && cachedUser?.custom_id
+         ? cachedUser.custom_id
+         : task?.assigned_to || "";
 
    // Formik configuration
    const formik = useFormik({
@@ -37,7 +78,8 @@ function TaskForm({ onClose, task: initialTask }) {
       validateOnBlur: true,
       initialValues: {
          subject: task?.subject || "",
-         assigned_to: task?.assigned_to || "",
+         // assigned_to: task?.assigned_to || "",
+         assigned_to: defaultAssignedTo,
          due_date: task?.due_date || "",
          status: task?.status || "",
          priority: task?.priority || "",
@@ -57,7 +99,7 @@ function TaskForm({ onClose, task: initialTask }) {
       }),
 
       onSubmit: (values, { resetForm }) =>
-         handleSave(values, saveAndNewRef.current, resetForm, onClose), // Default is Save
+         handleSave(values, saveAndNew.current, resetForm, onClose, onSuccess), // Default is Save
    });
 
    return (
@@ -88,11 +130,11 @@ function TaskForm({ onClose, task: initialTask }) {
 
                      <label>Assigned To</label>
                      <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="assigned_to"
-                           onChange={formik.handleChange}
+                        <UserLookup
                            value={formik.values.assigned_to}
+                           onChange={(val) =>
+                              formik.setFieldValue("assigned_to", val)
+                           }
                         />
                         {formik.touched.assigned_to &&
                            formik.errors.assigned_to && (
@@ -226,8 +268,14 @@ function TaskForm({ onClose, task: initialTask }) {
                   className={styles.primaryButton}
                   disabled={isCreating || isUpdating}
                   onClick={() => {
-                     saveAndNewRef.current = true;
-                     handleSave(formik.values, true, formik.resetForm, onClose);
+                     saveAndNew.current = true;
+                     handleSave(
+                        formik.values,
+                        true,
+                        formik.resetForm,
+                        onClose,
+                        onSuccess
+                     );
                   }}
                >
                   Save & New
@@ -237,7 +285,7 @@ function TaskForm({ onClose, task: initialTask }) {
                   className={styles.primaryButton}
                   disabled={isCreating || isUpdating}
                   onMouseDown={() => {
-                     saveAndNewRef.current = false; // mark that this is "Save"
+                     saveAndNew.current = false; // mark that this is "Save"
                   }}
                >
                   Save

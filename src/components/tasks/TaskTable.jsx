@@ -31,7 +31,7 @@ const TaskTable = ({ tasks, sortBy, order, handleSort }) => {
       setMenuOpenRow((prevRow) => (prevRow === custom_id ? null : custom_id));
    };
    const handleEdit = (task) => {
-      setSelectedAccount(task);
+      setSelectedTask(task);
       setIsModalOpen(true);
       setMenuOpenRow(null); //close the row menu
    };
@@ -42,19 +42,19 @@ const TaskTable = ({ tasks, sortBy, order, handleSort }) => {
          accessor: "subject",
          sortable: true,
          Cell: ({ row }) => (
-            <Link to={`/tasks/${row.original.custom_id}`} className="taskLink">
+            <Link to={`/tasks/${row.original.task_id}`} className="taskLink">
                {row.original.subject}
             </Link>
          ),
       },
       {
          Header: "Name",
-         accessor: "who_id",
+         accessor: "who_name",
          sortable: true,
       },
       {
          Header: "Related To",
-         accessor: "what_id",
+         accessor: "what_name",
          sortable: true,
       },
       {
@@ -107,7 +107,7 @@ const TaskTable = ({ tasks, sortBy, order, handleSort }) => {
                </thead>
                <tbody>
                   {tasks.map((task, idx) => (
-                     <tr key={task.custom_id}>
+                     <tr key={task.task_id}>
                         <td>{idx + 1}</td>
                         {columns.map((col) => (
                            <td key={col.accessor}>
@@ -119,11 +119,11 @@ const TaskTable = ({ tasks, sortBy, order, handleSort }) => {
                         <td className={styles.rowMenu}>
                            <button
                               className={styles.menuBtn}
-                              onClick={() => handleMenuToggle(task.custom_id)}
+                              onClick={() => handleMenuToggle(task.task_id)}
                            >
                               <FaAngleDown />
                            </button>
-                           {menuOpenRow === task.custom_id && (
+                           {menuOpenRow === task.task_id && (
                               <div className={styles.menuDropDown}>
                                  <button onClick={() => handleEdit(task)}>
                                     Edit
