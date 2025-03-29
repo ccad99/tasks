@@ -1,3 +1,4 @@
+// src/components/shared/GenericLookup.jsx
 import { useEffect, useState, useRef } from "react";
 import { useDebounce } from "use-debounce";
 import supabase from "../../../services/supabase";
@@ -12,7 +13,8 @@ function GenericLookup({
    valueField,
    placeholder = "Search...",
    defaultValue = null,
-   filter = "", // Optional filter, ready for future use
+   filter = "", // optional future filter
+   isClearable = true, // <-- NEW feature
 }) {
    const [searchTerm, setSearchTerm] = useState("");
    const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
@@ -20,9 +22,10 @@ function GenericLookup({
    const [selected, setSelected] = useState(null);
    const [showDropdown, setShowDropdown] = useState(false);
    const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
    const inputRef = useRef();
 
-   // Default value loader
+   // Load default value
    useEffect(() => {
       if (!value && defaultValue) {
          onChange(defaultValue[valueField]);
@@ -30,7 +33,7 @@ function GenericLookup({
       }
    }, [value, defaultValue, valueField, onChange]);
 
-   // Fetch matching options when user types
+   // Fetch options
    useEffect(() => {
       async function fetchOptions() {
          if (!debouncedSearchTerm || debouncedSearchTerm.length < 3) return;
@@ -52,8 +55,6 @@ function GenericLookup({
 
       fetchOptions();
    }, [debouncedSearchTerm, table, labelField, valueField]);
-
-   // --- handlers ---
 
    const handleSelect = (item) => {
       setSelected(item);
@@ -90,7 +91,6 @@ function GenericLookup({
       }
    };
 
-   // --- render ---
    return (
       <div className={styles.lookupWrapper}>
          <div className={styles.inputContainer}>
@@ -111,19 +111,21 @@ function GenericLookup({
             {selected && (
                <div className={styles.selectedDisplay}>
                   <span>{selected[labelField]}</span>
-                  <button
-                     type="button"
-                     className={styles.clearBtn}
-                     onClick={handleClear}
-                  >
-                     &times;
-                  </button>
+                  {isClearable && (
+                     <button
+                        type="button"
+                        className={styles.clearBtn}
+                        onClick={handleClear}
+                     >
+                        &times;
+                     </button>
+                  )}
                </div>
             )}
          </div>
 
          {showDropdown && options.length > 0 && (
-            <ul className={styles.dropdown}>
+            <ul className={`${styles.dropdown} ${styles.fadeIn}`}>
                {options.map((item, idx) => (
                   <li
                      key={item[valueField]}
