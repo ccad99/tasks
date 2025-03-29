@@ -7,7 +7,7 @@ import { useCreateTask } from "./useCreateTask";
 import { useUpdateTask } from "./useUpdateTask";
 import { format, parseISO } from "date-fns";
 import { getCurrentUser } from "../../services/apiAuth";
-import UserLookup from "../shared/UserLookup";
+import { UserLookup, ContactLookup, AccountLookup } from "../shared/lookups/lookups";
 import toast from "react-hot-toast";
 import styles from "./TaskForm.module.css";
 
@@ -81,8 +81,8 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
          // assigned_to: task?.assigned_to || "",
          assigned_to: defaultAssignedTo,
          due_date: task?.due_date || "",
-         status: task?.status || "",
-         priority: task?.priority || "",
+         status: task?.status || "Not Started",
+         priority: task?.priority || "Normal",
          who_id: task?.who_id || "",
          what_id: task?.what_id || "",
          description: task?.description || "",
@@ -135,6 +135,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                            onChange={(val) =>
                               formik.setFieldValue("assigned_to", val)
                            }
+                           name="assigned_to"
                         />
                         {formik.touched.assigned_to &&
                            formik.errors.assigned_to && (
@@ -206,21 +207,18 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                   <div className={styles.column}>
                      <label>Name</label>
                      <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="who_id"
-                           onChange={formik.handleChange}
-                           value={formik.values.who_id}
-                        />
-                     </div>
+                     <ContactLookup
+                        value={formik.values.who_id}
+                        onChange={(val) => formik.setFieldValue("who_id", val)}
+                        name="who_id"
+                     />
                      <label>Related To</label>
                      <div className={styles.inputField}>
-                        <input
-                           type="text"
-                           name="what_id"
-                           onChange={formik.handleChange}
-                           value={formik.values.what_id}
-                        />
+                     <AccountLookup
+                        value={formik.values.what_id}
+                        onChange={(val) => formik.setFieldValue("what_id", val)}
+                        name="what_id"
+                     />
                      </div>
                   </div>
                </div>

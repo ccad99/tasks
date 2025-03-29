@@ -1,4 +1,6 @@
-/* Wrapper to contain the input + dropdown */
+/* Generic Lookup CSS */
+
+/* Wrapper */
 .lookupWrapper {
    position: relative;
    width: 100%;
@@ -6,13 +8,14 @@
    flex-direction: column;
 }
 
-/* Input styling */
+/* Input */
 .input {
    width: 100%;
    padding: 8px;
    border: 1px solid var(--color-grey-300);
    border-radius: 4px;
    font-size: 1rem;
+   box-sizing: border-box;
 }
 
 /* Dropdown */
@@ -34,7 +37,7 @@
    transition: opacity 0.2s ease-in-out;
 }
 
-/* Dropdown items */
+/* Dropdown Item */
 .dropdown li {
    padding: 8px 12px;
    cursor: pointer;
@@ -43,21 +46,24 @@
    border-bottom: 1px solid var(--color-grey-100);
 }
 
-/* Last item border fix */
 .dropdown li:last-child {
    border-bottom: none;
 }
 
-/* Hover effect */
-.dropdown li:hover {
+.dropdown li:hover,
+.highlighted {
    background-color: var(--color-grey-100);
    color: var(--color-blue-600);
 }
 
+/* Input + Clear Button Wrapper */
 .inputContainer {
    position: relative;
+   display: flex;
+   align-items: center;
 }
 
+/* Selected Display */
 .selectedDisplay {
    position: absolute;
    top: 0;
@@ -71,26 +77,10 @@
    padding: 0 12px;
    border: 1px solid var(--color-grey-300);
    border-radius: 4px;
-   pointer-events: auto;
+   box-sizing: border-box;
 }
 
-/* Selected display (when an item is picked) */
-/* .selectedDisplay {
-   display: flex;
-   align-items: center;
-   background-color: var(--color-grey-50);
-   border: 1px solid var(--color-grey-300);
-   border-radius: 4px;
-   padding: 0 12px;
-   height: 43px;
-} */
-
-.highlighted {
-   background-color: var(--color-grey-200);
-   color: var(--color-blue-700);
-}
-
-/* Clear (X) button */
+/* Clear Button */
 .clearBtn {
    background: none;
    border: none;
