@@ -1,0 +1,92 @@
+.inputWrapper {
+   position: relative;
+   width: 100%;
+}
+
+.input {
+   width: 100%;
+   padding: 8px 40px 8px 8px;
+   border: 1px solid var(--color-grey-300);
+   border-radius: 4px;
+   font-size: 1rem;
+   box-sizing: border-box;
+}
+
+.inputError {
+   border-color: var(--color-red-500);
+}
+
+.input::placeholder {
+   color: var(--color-grey-400);
+   opacity: 0.6;
+}
+
+/* .iconBtn {
+   position: absolute;
+   right: 8px;
+   top: 50%;
+   transform: translateY(-50%);
+   background: none;
+   border: none;
+   cursor: pointer;
+   z-index: 2;
+   font-size: 1.2rem;
+   line-height: 1;
+   padding: 0;
+} */
+
+.iconBtn {
+   position: absolute;
+   right: 8px;
+   top: 50%;
+   transform: translateY(-75%);
+   background: none;
+   border: none;
+   cursor: pointer;
+   z-index: 2;
+   font-size: 1.2rem;
+   line-height: 1;
+   padding: 0;
+   display: flex; /* <-- Add this */
+   align-items: center; /* <-- Add this */
+   justify-content: center; /* <-- Add this */
+   height: 100%; /* <-- Makes sure it's centered in tall fields too */
+}
+
+.iconBtn:hover {
+   color: var(--color-blue-500);
+}
+
+.todayBtn {
+   margin-top: 4px;
+   background: none;
+   border: none;
+   color: var(--color-blue-500);
+   cursor: pointer;
+   font-size: 0.85rem;
+   padding: 0;
+}
+
+.todayBtn:hover {
+   text-decoration: underline;
+}
+
+.hiddenDateInput {
+   position: absolute;
+   opacity: 0;
+   pointer-events: none;
+   width: 0;
+   height: 0;
+}
+
+.errorText {
+   color: var(--color-red-500);
+   font-size: 0.8rem;
+   margin-top: 4px;
+}
+
+.warningText {
+   color: var(--color-yellow-600);
+   font-size: 0.8rem;
+   margin-top: 4px;
+}

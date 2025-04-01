@@ -3,7 +3,7 @@ import GenericLookup from "./GenericLookup";
 function ContactLookup(props) {
    return (
       <GenericLookup
-         table="contacts"
+         table="contact"
          labelField="name"
          valueField="custom_id"
          placeholder="Search contacts..."

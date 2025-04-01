@@ -1,25 +1,70 @@
-import { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import SharedModal from "../Shared/SharedModal";
+import { useCreateTask } from "./useCreateTask";
+import { useUpdateTask } from "./useUpdateTask";
+import { format, parseISO, isValid } from "date-fns";
+import DatePicker from "react-datepicker";
+import { getCurrentUser } from "../../services/apiAuth";
+import { buildSaveOptions } from "../../helpers/saveHelpers";
 import {
    UserLookup,
    ContactLookup,
    AccountLookup,
 } from "../shared/lookups/lookups";
 import DateInput from "../shared/dates/DateInput";
-import { useSave } from "../../hooks/useSave";
+import toast from "react-hot-toast";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "./TaskForm.module.css";
 
 function TaskForm({ onClose, onSuccess, task: initialTask }) {
    const queryClient = useQueryClient();
-   const [task] = useState(initialTask);
-   const isEditing = !!initialTask;
+
+   const [task, setTask] = useState(initialTask);
+   const [isEditing, setIsEditing] = useState(!!initialTask);
+
+   // const { createTask, isCreating } = useCreateTask();
+   // const { updateTask, isUpdating } = useUpdateTask();
+
+   const { saveTask, isCreating, isUpdating } = useTaskSave(isEditing, task);
+
    const saveAndNewRef = useRef(false);
 
-   // Setup Save hook (create + update handled inside)
-   const { save, isCreating, isUpdating } = useSave({ resourceName: "Task" });
+   function buildSaveOptions(saveAndNew, formik, onClose, onSuccess) {
+      return {
+         saveAndNew,
+         resetForm: formik.resetForm,
+         onClose,
+         onSuccess,
+      };
+   }
+
+   const handleSave = (values, saveAndNew) => {
+      saveTask(values, {
+         saveAndNew,
+         formik,
+         onClose,
+         onSuccess,
+         onBeforeSave: () => {
+            // Optional future logic before the mutation triggers
+         },
+      });
+      saveAndNewRef.current = false;
+   };
+
+      options.onBeforeSave?.(); // In case we later add pre-save logic
+
+      const payload = isEditing
+         ? { custom_id: task.custom_id, updateFields: values, user }
+         : values;
+
+      const action = isEditing ? updateTask : createTask;
+
+      action(payload, options);
+      saveAndNewRef.current = false;
+   };
 
    const cachedUser = queryClient.getQueryData(["user"]);
    const defaultAssignedTo =
@@ -27,6 +72,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
          ? cachedUser.custom_id
          : task?.assigned_to || "";
 
+   // Formik configuration
    const formik = useFormik({
       validateOnChange: false,
       validateOnBlur: true,
@@ -50,19 +96,14 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
          what_id: Yup.string(),
          description: Yup.string(),
       }),
-      onSubmit: (values, { resetForm }) => {
-         save({
-            isEditing,
-            record: task,
-            values,
-            options: {
-               onClose,
-               onSuccess,
-               resetForm,
-               saveAndNew: saveAndNewRef.current,
-            },
-         });
-      },
+
+      onSubmit: (values, formikBag) =>
+         handleSave(values, {
+            saveAndNew: false,
+            resetForm: formikBag.resetForm,
+            onClose,
+            onSuccess,
+         }),
    });
 
    return (
@@ -70,11 +111,10 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
          <div className={styles.modalHeader}>
             <h2>{isEditing ? `Edit ${task.subject}` : "New Task"}</h2>
          </div>
-
          <form onSubmit={formik.handleSubmit} className={styles.formContainer}>
             <div className={styles.pageContainer}>
-               {/* -------- Task Info -------- */}
                <h3 className={styles.sectionHeader}>Task Information</h3>
+               {/* Left Column */}
                <div className={styles.gridContainer}>
                   <div className={styles.column}>
                      <label>Subject</label>
@@ -121,10 +161,15 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                               formik.touched.due_date && formik.errors.due_date
                            }
                         />
+                        {formik.touched.due_date && formik.errors.due_date && (
+                           <p className={styles.error}>
+                              {formik.errors.due_date}
+                           </p>
+                        )}
                      </div>
                   </div>
 
-                  {/* -------- Status & Priority -------- */}
+                  {/* Right Column */}
                   <div className={styles.column}>
                      <label>Priority</label>
                      <div className={styles.inputField}>
@@ -158,7 +203,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                   </div>
                </div>
 
-               {/* -------- Contact Info -------- */}
+               {/* Contact Information */}
                <h3 className={styles.sectionHeader}>Contact Information</h3>
                <div className={styles.gridContainer}>
                   <div className={styles.column}>
@@ -184,8 +229,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                      </div>
                   </div>
                </div>
-
-               {/* -------- Audit Info -------- */}
+               {/* Audit Section - Created By / Last Modified By -- only on Edit */}
                {isEditing && (
                   <>
                      <h3 className={styles.sectionHeader}>Audit Information</h3>
@@ -206,7 +250,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                   </>
                )}
 
-               {/* -------- Description -------- */}
+               {/* Description */}
                <h3 className={styles.sectionHeader}>Description</h3>
                <textarea
                   name="description"
@@ -215,7 +259,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                />
             </div>
 
-            {/* -------- Footer Buttons -------- */}
+            {/* Footer Buttons */}
             <div className={styles.buttonContainer}>
                <button
                   type="button"
@@ -228,10 +272,14 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                   type="button"
                   className={styles.primaryButton}
                   disabled={isCreating || isUpdating}
-                  onClick={() => {
-                     saveAndNewRef.current = true;
-                     formik.handleSubmit();
-                  }}
+                  onClick={() =>
+                     handleSave(formik.values, {
+                        saveAndNew: true,
+                        resetForm: formik.resetForm,
+                        onClose,
+                        onSuccess,
+                     })
+                  }
                >
                   Save & New
                </button>
@@ -240,7 +288,7 @@ function TaskForm({ onClose, onSuccess, task: initialTask }) {
                   className={styles.primaryButton}
                   disabled={isCreating || isUpdating}
                   onMouseDown={() => {
-                     saveAndNewRef.current = false;
+                     saveAndNew.current = false; // mark that this is "Save"
                   }}
                >
                   Save

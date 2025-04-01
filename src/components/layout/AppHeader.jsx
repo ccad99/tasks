@@ -59,7 +59,7 @@ function AppHeader() {
                               : item === "Calendar"
                               ? "/coming-soon?title=Calendar"
                               : item === "Objectives"
-                              ? "/coming-soon?title=Objectives"
+                              ? "objectives"
                               : item === "Goals"
                               ? "/coming-soon?title=Goals"
                               : item === "Plans"

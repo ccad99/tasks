@@ -6,6 +6,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage";
 import AppLayout from "./components/layout/AppLayout.jsx";
 import Dashboard from "./pages/Dashboard";
+import ObjectivePage from "./pages/ObjectivePage.jsx";
 import TaskPage from "./pages/TaskPage";
 import AccountPage from "./pages/AccountPage";
 import ContactPage from "./pages/ContactPage";
@@ -46,6 +47,7 @@ function App() {
                      path="contacts/:custom_id"
                      element={<ViewContactPage />}
                   />
+                  <Route path="objectives" element={<ObjectivePage />} />
                   <Route path="tasks" element={<TaskPage />} />
                   <Route path="tasks/:custom_id" element={<ViewTaskPage />} />
                   <Route path="/coming-soon" element={<ComingSoon />} />

@@ -40,7 +40,7 @@ function GenericLookup({
 
          const { data, error } = await supabase
             .from(table)
-            .select(`${valueField}, ${labelField}`)
+            .select([valueField, labelField].join(","))
             .ilike(labelField, `%${debouncedSearchTerm}%`)
             .order(labelField, { ascending: true });
 
