@@ -2,23 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import ViewRecordLayout from "../shared/ViewRecordLayout";
-import { useTask } from "./useTask";
+import { useObjective } from "./useObjective";
 import { getCurrentUser } from "../../services/apiAuth";
 import SharedModal from "../Shared/SharedModal";
-import TaskForm from "./TaskForm";
+import ObjectiveForm from "./ObjectiveForm";
 import Spinner from "../../ui/Spinner";
 import styles from "../shared/ViewRecordLayout.module.css";
 
-const ViewTaskPage = () => {
+const ViewObjectivePage = () => {
   const queryClient = useQueryClient();
   const { custom_id } = useParams();
-  const { task, isLoading, error } = useTask(custom_id);
+  const { objective, isLoading, error } = useObjective(custom_id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedObjective, setSelectedObjective] = useState(null);
 
-  // console.log(`In View Task Page: ${custom_id}`);
-  // console.log(task);
+  // console.log(`In View Objective Page: ${custom_id}`);
+  // console.log(objective);
 
   // warm the cache
   useEffect(() => {
@@ -32,62 +32,63 @@ const ViewTaskPage = () => {
     checkUser();
   }, []);
 
-  //   if (isLoading) return <p>Loading task...</p>;
+  // if (isLoading) return <p>Loading objective...</p>;
   if (isLoading)
     return (
       <div style={{ minHeight: "300px" }}>
         <Spinner useAlt />
       </div>
     );
-  if (error) return <p>Error loading task: {error.message}</p>;
-  if (!task) return <p>Task not found</p>;
+
+  if (error) return <p>Error loading objective: {error.message}</p>;
+  if (!objective) return <p>Objective not found</p>;
 
   const handleEdit = () => {
-    setSelectedTask(task); // set the currently loaded task
+    setSelectedObjective(objective); // set the currently loaded objective
     setIsModalOpen(true); // open the modal
   };
 
   return (
     <>
       <ViewRecordLayout
-        title={`View Task: ${task.subject}`}
+        title={`View Objective: ${objective.name}`}
         headerContent={<button onClick={handleEdit}>Edit</button>}
         leftColumn={
           <div>
             <p>
-              <strong>Assigned To: </strong>
-              {task.assigned_to}
+              <strong>Objective Owner: </strong>
+              {objective.owner_id}
             </p>
             <p>
-              <strong>Task Subject: </strong>
-              {task.subject}
+              <strong>Objective Title: </strong>
+              {objective.name}
             </p>
             <p>
-              <strong>Due Date: </strong> {task.due_date}
+              <strong>Due Date: </strong> {objective.due_date}
             </p>
             <p>
               <strong>Priority: </strong>
-              {task.priority}
+              {objective.priority}
             </p>
             <p>
-              <strong>Status: </strong> {task.status}
+              <strong>Status: </strong> {objective.status}
             </p>
             <p>
               <strong>Completed Date: </strong>{" "}
-              {task.date_completed
-                ? format(new Date(task.completed_date), "PPPpp") // Customize format as needed
+              {objective.date_completed
+                ? format(new Date(objective.completed_date), "PPPpp") // Customize format as needed
                 : "Not Completed"}
             </p>
-            <p>
-              <strong>Name: </strong> {task.who_id}
+            {/* <p>
+              <strong>Name: </strong> {objective.who_id}
             </p>
             <p>
               <strong>Related To: </strong>
-              {task.what_id}
-            </p>
+              {objective.what_id}
+            </p> */}
             <p>
               <strong>Comments: </strong>
-              {task.description}
+              {objective.description}
             </p>
           </div>
         }
@@ -100,13 +101,13 @@ const ViewTaskPage = () => {
       />
       {isModalOpen && (
         <SharedModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <TaskForm
-            task={selectedTask}
+          <ObjectiveForm
+            objective={selectedObjective}
             onClose={() => setIsModalOpen(false)}
             onSuccess={() => {
-              // 👇 Invalidate task query to refetch the updated record
+              // 👇 Invalidate objective query to refetch the updated record
               queryClient.invalidateQueries({
-                queryKey: ["task", custom_id],
+                queryKey: ["objective", custom_id],
               });
               setIsModalOpen(false);
             }}
@@ -117,4 +118,4 @@ const ViewTaskPage = () => {
   );
 };
 
-export default ViewTaskPage;
+export default ViewObjectivePage;
