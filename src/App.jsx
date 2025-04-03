@@ -14,6 +14,7 @@ import ViewAccountPage from "./components/accounts/ViewAccountPage";
 import ViewContactPage from "./components/contacts/ViewContactPage";
 import ViewTaskPage from "./components/tasks/ViewTaskPage";
 import ViewObjectivePage from "./components/objectives/ViewObjectivePage";
+import Calendar from "./components/calendar/Calendar.jsx";
 import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 import PageNotFound from "./pages/PageNotFound";
 import ComingSoon from "./pages/ComingSoon";
@@ -42,6 +43,7 @@ function App() {
             <Route path="accounts/:custom_id" element={<ViewAccountPage />} />
             <Route path="contacts" element={<ContactPage />} />
             <Route path="contacts/:custom_id" element={<ViewContactPage />} />
+            <Route path="calendar" element={<Calendar />} />
             <Route path="objectives" element={<ObjectivePage />} />
             <Route
               path="objectives/:custom_id"
